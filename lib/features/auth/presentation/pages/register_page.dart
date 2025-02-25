@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:social_media_app/features/auth/presentation/components/my_button.dart';
 import 'package:social_media_app/features/auth/presentation/components/my_text_field.dart';
-import 'package:social_media_app/features/auth/presentation/pages/register_page.dart';
+import 'package:social_media_app/features/auth/presentation/pages/login_page.dart';
 import 'package:social_media_app/theme/app_colors.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   final emailController = TextEditingController();
+  final nameController = TextEditingController();
   final pswdController = TextEditingController();
+  final confirmPswdController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: SafeArea(
         child: Center(
@@ -37,13 +38,20 @@ class _LoginPageState extends State<LoginPage> {
                   const SizedBox(height: 30),
                   // welcome back message
                   Text(
-                    "Welcome back! 😊😘",
+                    "Let's create an account for you! 😉✌️",
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.inversePrimary,
                       fontSize: 16,
                     ),
                   ),
                   const SizedBox(height: 25),
+                  // name textField
+                  MyTextField(
+                    controller: nameController,
+                    hintText: "Name...",
+                    obscureText: false,
+                  ),
+                  const SizedBox(height: 5),
                   // email textField
                   MyTextField(
                     controller: emailController,
@@ -57,19 +65,23 @@ class _LoginPageState extends State<LoginPage> {
                     hintText: "Password...",
                     obscureText: true,
                   ),
+                  const SizedBox(height: 5),
+                  // confirm password textField
+                  MyTextField(
+                    controller: confirmPswdController,
+                    hintText: " Confirm password...",
+                    obscureText: true,
+                  ),
                   const SizedBox(height: 10),
                   // login button
-                  MyButton(
-                    onTap: () {},
-                    text: "Login",
-                  ),
+                  MyButton(onTap: () {}, text: "Register"),
                   const SizedBox(height: 40),
-                  // text to go the register page
+                  // text to go the login page
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Not a member?",
+                        "Already have an account?",
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.inversePrimary,
                           fontWeight: FontWeight.bold,
@@ -80,11 +92,11 @@ class _LoginPageState extends State<LoginPage> {
                         onTap: () => Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const RegisterPage(),
+                            builder: (context) => const LoginPage(),
                           ),
                         ),
                         child: const Text(
-                          "Register Now!",
+                          "Login Now!",
                           style: TextStyle(
                             color: AppColors.bleu,
                             fontWeight: FontWeight.bold,
