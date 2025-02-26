@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:social_media_app/features/auth/presentation/components/my_button.dart';
 import 'package:social_media_app/features/auth/presentation/components/my_text_field.dart';
+import 'package:social_media_app/features/auth/presentation/cubits/auth_cubit.dart';
 import 'package:social_media_app/features/auth/presentation/pages/register_page.dart';
+import 'package:provider/provider.dart';
 import 'package:social_media_app/theme/app_colors.dart';
 
 class LoginPage extends StatefulWidget {
@@ -15,10 +17,38 @@ class _LoginPageState extends State<LoginPage> {
   final emailController = TextEditingController();
   final pswdController = TextEditingController();
 
+  void login() {
+    // prepare email and password
+    final String email = emailController.text;
+    final String passwd = pswdController.text;
+
+    // auth cubit
+    final authCubit = context.read<AuthCubit>();
+
+    if (email.isNotEmpty && passwd.isNotEmpty) {
+      // login
+      authCubit.login(email, passwd);
+    }
+    // otherwise, display an error
+    else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Please enter both email and password😏"),
+        ),
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    pswdController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: SafeArea(
         child: Center(
@@ -28,6 +58,7 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  const SizedBox(height: 50),
                   // icon (lock_open_rounded)
                   const Icon(
                     Icons.lock_open_rounded,
@@ -60,7 +91,7 @@ class _LoginPageState extends State<LoginPage> {
                   const SizedBox(height: 10),
                   // login button
                   MyButton(
-                    onTap: () {},
+                    onTap: login,
                     text: "Login",
                   ),
                   const SizedBox(height: 40),

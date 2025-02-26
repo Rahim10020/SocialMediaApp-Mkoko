@@ -29,6 +29,7 @@ class _RegisterPageState extends State<RegisterPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  const SizedBox(height: 40),
                   // icon (lock_open_rounded)
                   const Icon(
                     Icons.lock_open_rounded,
