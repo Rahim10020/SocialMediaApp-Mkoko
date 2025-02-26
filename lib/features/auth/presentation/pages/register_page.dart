@@ -35,12 +35,16 @@ class _RegisterPageState extends State<RegisterPage> {
         cfpswd.isNotEmpty) {
       // ensure password match
       if (paswd == cfpswd) {
-        //
+        authCubit.register(name, email, paswd);
       }
 
       // if password don't match
       else {
-        //
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Password don't match😒🙄"),
+          ),
+        );
       }
     }
 
@@ -52,6 +56,15 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
       );
     }
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    nameController.dispose();
+    pswdController.dispose();
+    confirmPswdController.dispose();
+    super.dispose();
   }
 
   @override
