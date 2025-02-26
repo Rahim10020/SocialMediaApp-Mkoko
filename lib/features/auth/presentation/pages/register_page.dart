@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:social_media_app/features/auth/presentation/components/my_button.dart';
 import 'package:social_media_app/features/auth/presentation/components/my_text_field.dart';
+import 'package:social_media_app/features/auth/presentation/cubits/auth_cubit.dart';
 import 'package:social_media_app/features/auth/presentation/pages/login_page.dart';
 import 'package:social_media_app/theme/app_colors.dart';
+import 'package:provider/provider.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -16,6 +18,41 @@ class _RegisterPageState extends State<RegisterPage> {
   final nameController = TextEditingController();
   final pswdController = TextEditingController();
   final confirmPswdController = TextEditingController();
+
+  // register method
+  void register() {
+    // prepare informations
+    final email = emailController.text;
+    final name = nameController.text;
+    final paswd = pswdController.text;
+    final cfpswd = confirmPswdController.text;
+
+    final authCubit = context.read<AuthCubit>();
+
+    if (email.isNotEmpty &&
+        name.isNotEmpty &&
+        paswd.isNotEmpty &&
+        cfpswd.isNotEmpty) {
+      // ensure password match
+      if (paswd == cfpswd) {
+        //
+      }
+
+      // if password don't match
+      else {
+        //
+      }
+    }
+
+    // if not, display error message
+    else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Please enter all fields😏"),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +112,10 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   const SizedBox(height: 10),
                   // login button
-                  MyButton(onTap: () {}, text: "Register"),
+                  MyButton(
+                    onTap: register,
+                    text: "Register",
+                  ),
                   const SizedBox(height: 40),
                   // text to go the login page
                   Row(
